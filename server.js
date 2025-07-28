@@ -4,12 +4,14 @@ const cors = require('cors');
 require('dotenv').config();
 
 const productRoutes = require('./routes/products');
+const settingsRoutes = require("./routes/settings");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use('/api/products', productRoutes);
+app.use("/api/settings", settingsRoutes);
 
 app.get('/', (req, res) => {
   res.send('API Firstp funcionando 🚀');
