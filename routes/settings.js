@@ -15,11 +15,16 @@ router.put("/", async (req, res) => {
   try {
     const data = req.body;
 
+    // Validación opcional del logo base64
+    if (data.logo && !data.logo.startsWith("data:image/")) {
+      return res.status(400).json({ error: "El logo debe ser una imagen en formato base64" });
+    }
+
     let settings = await Settings.findOne();
     if (settings) {
       settings = await Settings.findByIdAndUpdate(settings._id, data, { new: true });
     } else {
-      setting = await Settings.create(data);
+      settings = await Settings.create(data);
     }
 
     res.json(settings);
