@@ -24,14 +24,18 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  console.log("Datos recibidos:", req.body); // 👀 debug en la terminal
+
   try {
     const { nombre, descripcion, precio, imagen, publicado } = req.body;
     const nuevo = await Product.create({ nombre, descripcion, precio, imagen, publicado });
     res.status(201).json(nuevo);
   } catch (error) {
+    console.error("Error al guardar producto:", error.message); // 👀 detalle del error
     res.status(400).json({ error: error.message });
   }
 });
+
 
 router.put('/:id', async (req, res) => {
   try {
