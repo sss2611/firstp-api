@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 
-// 🔍 Obtener todos los productos
 router.get('/', async (req, res) => {
   try {
     const productos = await Product.find();
@@ -12,7 +11,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 🔍 Obtener un producto específico por ID
 router.get('/:id', async (req, res) => {
   try {
     const producto = await Product.findById(req.params.id);
@@ -25,7 +23,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ➕ Crear un nuevo producto
 router.post('/', async (req, res) => {
   try {
     const { nombre, descripcion, precio, imagen, publicado } = req.body;
@@ -36,7 +33,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ✏️ Actualizar un producto por ID
 router.put('/:id', async (req, res) => {
   try {
     const actualizado = await Product.findByIdAndUpdate(
@@ -53,27 +49,10 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// 🗑️ Eliminar un producto por ID
 router.delete('/:id', async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.json({ mensaje: 'Producto eliminado' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// 🧪 Ruta de prueba para insertar producto fijo
-router.get('/insertar-producto', async (req, res) => {
-  try {
-    const nuevo = await Product.create({
-      nombre: "Bombilla grabada",
-      descripcion: "Con diseño artesanal santiagueño",
-      precio: 700,
-      imagen: "https://ejemplo.com/bombilla.jpg",
-      publicado: true
-    });
-    res.json(nuevo);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

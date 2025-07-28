@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Settings = require("../models/Settings");
 
-// 🔍 Obtener configuración (solo una)
 router.get("/", async (req, res) => {
   try {
     const settings = await Settings.findOne();
@@ -12,7 +11,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✏️ Actualizar configuración (crea si no existe)
 router.put("/", async (req, res) => {
   try {
     const data = req.body;
