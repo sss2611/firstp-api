@@ -36,12 +36,13 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Actualizar campos (incluye publicación)
-router.patch('/:id', async (req, res) => {
+// ✅ Actualizar producto con PUT (edición completa)
+router.put('/:id', async (req, res) => {
   try {
+    const { nombre, descripcion, precio, imagen, publicado } = req.body;
     const productoActualizado = await Product.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { nombre, descripcion, precio, imagen, publicado },
       { new: true }
     );
     if (!productoActualizado) {
