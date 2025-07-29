@@ -2,35 +2,29 @@ const express = require("express");
 const router = express.Router();
 const Settings = require("../models/Settings");
 
+// 🧩 Obtener el último tema configurado
 router.get("/", async (req, res) => {
-  try {
-    const settings = await Settings.findOne();
-    res.json(settings || {});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    try {
+        const ultimaConfig = await Settings.findOne().sort({ createdAt: -1 });
+        res.json(ultimaConfig || {});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "No se pudo obtener la configuración." });
+    }
 });
 
-router.put("/", async (req, res) => {
-  try {
-    const data = req.body;
+// 💾 Guardar un nuevo tema
+router.post("/", async (req, res) => {
+    const { theme } = req.body;
 
-    // Validación opcional del logo base64
-    if (data.logo && !data.logo.startsWith("data:image/")) {
-      return res.status(400).json({ error: "El logo debe ser una imagen en formato base64" });
+    try {
+        const nuevaConfig = new Settings({ theme });
+        await nuevaConfig.save();
+        res.status(201).json(nuevaConfig);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "No se pudo guardar la configuración." });
     }
-
-    let settings = await Settings.findOne();
-    if (settings) {
-      settings = await Settings.findByIdAndUpdate(settings._id, data, { new: true });
-    } else {
-      settings = await Settings.create(data);
-    }
-
-    res.json(settings);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
 });
 
 module.exports = router;
