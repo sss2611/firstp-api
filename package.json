@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +15,13 @@
     "mongoose": "^8.16.4"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "API REST desarrollada en Node.js y Express para gestionar productos artesanales. Pensada para integrarse con el frontend desplegado en Vercel.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sss2611/firstp-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sss2611/firstp-api/issues"
+  },
+  "homepage": "https://github.com/sss2611/firstp-api#readme"
 }
