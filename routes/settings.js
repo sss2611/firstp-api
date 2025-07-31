@@ -14,17 +14,18 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const { theme, marca } = req.body; // ✅ Desestructurás también marca
+    const { theme, marca, logo } = req.body;
 
     try {
-        const nuevaConfig = new Settings({ theme, marca }); // ✅ Lo incluís al crear
+        const nuevaConfig = new Settings({ theme, marca, logo });
         await nuevaConfig.save();
-        res.status(201).json(nuevaConfig); // 💾 Devuelve todo lo guardado
+        res.status(201).json(nuevaConfig);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "No se pudo guardar la configuración." });
+        console.error("No se pudo guardar la configuración:", err);
+        res.status(500).json({ error: "Error al guardar configuración" });
     }
 });
+
 
 
 module.exports = router;
