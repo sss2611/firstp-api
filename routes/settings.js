@@ -1,62 +1,20 @@
-// const express = require("express");
-// const router = express.Router();
-// const Settings = require("../models/Settings");
-
-// const defaultLogo = "static/img/SS.png";
-
-// const defaultSettings = {
-//     theme: "lux",
-//     marca: "FirstP",
-//     logo: defaultLogo
-// };
-
-// router.get("/", async (req, res) => {
-//     try {
-//         const ultimaConfig = await Settings.findOne().sort({ createdAt: -1 });
-//         if (ultimaConfig) {
-//             res.json(ultimaConfig);
-//         } else {
-//             res.json(defaultSettings);
-//         }
-//     } catch (err) {
-//         console.error("Error al obtener configuración:", err);
-//         res.status(500).json({ error: "No se pudo obtener la configuración." });
-//     }
-// });
-
-// router.post("/", async (req, res) => {
-//     const { theme, marca, logo } = req.body;
-
-//     try {
-//         const nuevaConfig = new Settings({ theme, marca, logo });
-//         await nuevaConfig.save();
-//         res.status(201).json(nuevaConfig);
-//     } catch (err) {
-//         console.error("No se pudo guardar la configuración:", err);
-//         res.status(500).json({ error: "Error al guardar configuración." });
-//     }
-// });
-
-// module.exports = router;
 const express = require("express");
 const router = express.Router();
 const Settings = require("../models/Settings");
+const Products = require("../models/Products"); // Asegurate que el path sea correcto
 
-// Imagen default base64 o ruta local
-const defaultLogo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."; // solo como ejemplo
+const defaultLogo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...";
 
-// Configuración por defecto
 const defaultSettings = {
     theme: "lux",
     marca: "FirstP",
     logo: defaultLogo
 };
 
-// 📥 GET → devuelve última configuración guardada o la default si no hay ninguna
+// 📥 GET configuración actual
 router.get("/", async (req, res) => {
     try {
         const ultimaConfig = await Settings.findOne().sort({ createdAt: -1 });
-
         return res.json(ultimaConfig || defaultSettings);
     } catch (error) {
         console.error("Error al obtener configuración:", error);
@@ -64,7 +22,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// 📝 POST → guarda nueva configuración
+// 📤 POST nueva configuración
 router.post("/", async (req, res) => {
     const { theme, marca, logo } = req.body;
 
@@ -79,6 +37,26 @@ router.post("/", async (req, res) => {
     } catch (error) {
         console.error("Error al guardar configuración:", error);
         res.status(500).json({ error: "No se pudo guardar la configuración." });
+    }
+});
+
+// 🚀 GET configuración + productos combinados
+router.get("/full", async (req, res) => {
+    try {
+        const config = await Settings.findOne().sort({ createdAt: -1 });
+        const products = await Products.find();
+
+        const response = {
+            theme: config?.theme || defaultSettings.theme,
+            marca: config?.marca || defaultSettings.marca,
+            logo: config?.logo || defaultSettings.logo,
+            products: products || [],
+        };
+
+        res.json(response);
+    } catch (error) {
+        console.error("Error al obtener configuración completa:", error);
+        res.status(500).json({ error: "Error al obtener configuración completa." });
     }
 });
 
