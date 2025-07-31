@@ -43,7 +43,7 @@ const router = express.Router();
 const Settings = require("../models/Settings");
 
 // Imagen default base64 o ruta local
-const defaultLogo = "static/img/SS.png"; // Podés reemplazar esto con base64 si querés evitar rutas
+const defaultLogo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."; // solo como ejemplo
 
 // Configuración por defecto
 const defaultSettings = {

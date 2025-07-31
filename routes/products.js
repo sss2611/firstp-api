@@ -118,6 +118,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.patch('/:id/publicar', async (req, res) => {
+  try {
+    const producto = await Product.findByIdAndUpdate(
+      req.params.id,
+      { publicado: true },
+      { new: true }
+    );
+    res.json(producto);
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+
 // 🗑️ Eliminar producto
 router.delete('/:id', async (req, res) => {
   try {
