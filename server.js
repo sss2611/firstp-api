@@ -6,8 +6,6 @@ const imageRoute = require("./routes/imageRoute");
 const settingRoute = require('./routes/settingRoute');
 const productRoute = require('./routes/productRoute');
 
-
-
 const app = express();
 
 // Middlewares
