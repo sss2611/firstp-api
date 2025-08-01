@@ -4,9 +4,8 @@ const productSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   descripcion: { type: String },
   precio: { type: Number, required: true },
-  imagen: { type: String },
-  publicado: { type: Boolean, default: false }
+  publicado: { type: Boolean, default: false },
+  imagen: { type: String } // aquí almacenarás la URL de Cloudinary
 }, { timestamps: true });
-
 
 module.exports = mongoose.model('Product', productSchema);
