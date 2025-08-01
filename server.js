@@ -7,6 +7,7 @@ const settingRoute = require('./routes/settingRoute');
 const productRoute = require('./routes/productRoute');
 
 const app = express();
+const PORT = process.env.PORT || 8080;
 
 // Middlewares
 app.use(cors());
@@ -15,21 +16,9 @@ app.use("/api/images", imageRoute);
 app.use('/api/config', settingRoute);
 app.use('/api/products', productRoute);
 
-// mongoose
-//   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log("✅ Conectado a MongoDB"))
-//   .catch((err) => console.error("❌ Error de conexión:", err));
-
-// const PORT = process.env.PORT || 8080;
-// try {
-//   app.listen(PORT, '0.0.0.0', () => {
-//     console.log(`🚀 Servidor escuchando en puerto ${PORT}`);
-//   });
-// } catch (error) {
-//   console.error('❌ Error al iniciar el servidor:', error);
-// }
-
-const PORT = process.env.PORT || 8080;
+app.get('/', (req, res) => {
+  res.send('✨ API de FirstP online');
+});
 
 async function startServer() {
   try {
