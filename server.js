@@ -22,6 +22,7 @@ mongoose
   .catch((err) => console.error("❌ Error de conexión:", err));
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor escuchando en puerto ${PORT}`);
 });
+
