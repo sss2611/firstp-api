@@ -15,10 +15,23 @@ app.use(express.json());
 app.use("/api/images", imageRoute);
 app.use('/api/config', settingRoute);
 app.use('/api/products', productRoute);
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.send('✨ API de FirstP online');
+  res.send(`
+    <html>
+      <body style="text-align:center;margin-top:50px;">
+      <h1>✨ API de FirstP online</h1>
+      <img src="/SS.png" alt="Logo de FirstP" />
+      </body>
+    </html>
+  `);
 });
+
+
+// app.get('/', (req, res) => {
+//   res.send('✨ API de FirstP online');
+// });
 
 async function startServer() {
   try {
